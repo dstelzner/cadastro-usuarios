@@ -1,7 +1,9 @@
 import { User } from 'src/user/domain/entities/user.entity';
 import { UserRepository } from 'src/user/domain/repositories/user.repository';
 import { UserModel } from '../models/user.model';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class UserDatabaseRepository implements UserRepository {
   toDomain(userModel: UserModel): User {
     return new User(userModel);
@@ -9,7 +11,18 @@ export class UserDatabaseRepository implements UserRepository {
 
   async findById(id: string): Promise<User | null> {
     const userModel = await UserModel.findByPk(id);
+
+    if (!userModel) return null;
+
     return this.toDomain(userModel);
+  }
+
+  async findAll(): Promise<User[]> {
+    const users = await UserModel.findAll();
+
+    if (!users) return null;
+
+    return users.map((user) => this.toDomain(user));
   }
 
   async create(user: User): Promise<User> {
@@ -17,9 +30,8 @@ export class UserDatabaseRepository implements UserRepository {
     return this.toDomain(userModel);
   }
 
-  async delete(user: User): Promise<string> {
-    await UserModel.destroy({ where: { id: user.id } });
-    return user.id;
+  async delete(id: string): Promise<void> {
+    await UserModel.destroy({ where: { id } });
   }
 
   async update(user: User): Promise<User> {

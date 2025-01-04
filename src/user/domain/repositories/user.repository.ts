@@ -9,6 +9,12 @@ export interface UserRepository {
   findById(id: string): Promise<User | null>;
 
   /**
+   * Finds all users.
+   * @returns Users found.
+   */
+  findAll(): Promise<User[]>;
+
+  /**
    * Creates user.
    * @param user User.
    * @returns User created.
@@ -20,7 +26,7 @@ export interface UserRepository {
    * @param user User.
    * @returns User id of the deleted user.
    */
-  delete(user: User): Promise<string>;
+  delete(id: string): Promise<void>;
 
   /**
    * Updates user.
