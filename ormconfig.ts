@@ -5,6 +5,7 @@ const sequelizeConfig: SequelizeModuleOptions = {
   storage: 'database.sqlite',
   autoLoadModels: true,
   synchronize: true,
+  logging: console.log,
 };
 
 export default sequelizeConfig;
