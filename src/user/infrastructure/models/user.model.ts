@@ -5,7 +5,6 @@ import { Column, DataType, Model, Table } from 'sequelize-typescript';
 export class UserModel extends Model {
   @Column({
     primaryKey: true,
-    autoIncrement: true,
     type: DataType.UUID,
     defaultValue: DataTypes.UUIDV4,
   })

@@ -5,9 +5,10 @@ import { User } from 'src/user/domain/entities/user.entity';
 export class UpdateUserUseCase {
   constructor(private readonly repository: UserRepository) {}
 
-  async execute(userDto: UserDto): Promise<User> {
+  async execute(id: string,
+    userDto: UserDto): Promise<User> {
     const user = new User({
-      id: userDto.id,
+      id,
       name: userDto.name,
       email: userDto.email,
       birthDate: userDto.birthDate,
